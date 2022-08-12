@@ -1,6 +1,6 @@
 
-hidden = [".config"]
-run = "yarn start"
+hidden = [".config", ".gitignore", 'README.md']
+run = "yarn dev"
 
 [[hints]]
 regex = "Error \\[ERR_REQUIRE_ESM\\]"

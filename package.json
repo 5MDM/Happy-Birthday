@@ -1,14 +1,25 @@
 {
+  "type": "module",
   "name": "happy-birthday",
+  "main": "./src/app.js",
   "version": "0.0.0",
   "private": true,
+  "author": "5MDM",
+  "license": "MIT",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./dist/bundle.min.js",
+    "build": "rollup -c",
+    "dev": "node ./bin/www.js"
   },
   "dependencies": {
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "express": "~4.16.1",
-    "morgan": "~1.9.1"
+    "express": "~4.16.1"
+  },
+  "bugs": {
+    "url": "https://github.com/5MDM/Happy-Birthday/issues"
+  },
+  "homepage": "https://github.com/5MDM/Happy-Birthday#readme",
+  "devDependencies": {
+    "morgan": "^1.10.0",
+    "rollup": "^2.77.3"
   }
 }
