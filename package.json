@@ -7,19 +7,24 @@
   "author": "5MDM",
   "license": "MIT",
   "scripts": {
-    "start": "node ./dist/bundle.min.js",
+    "start": "node ./dist/bundle.js",
     "build": "rollup -c",
-    "dev": "node ./bin/www.js"
+    "dev": "node ./bin/www.js",
+    "update": "curl --compressed -o- -L https://yarnpkg.com/install.sh | bash"
   },
   "dependencies": {
-    "express": "~4.16.1"
+    "express": "~4.16.1",
+    "express.js": "^1.0.0",
+    "readline": "^1.3.0"
   },
   "bugs": {
     "url": "https://github.com/5MDM/Happy-Birthday/issues"
   },
   "homepage": "https://github.com/5MDM/Happy-Birthday#readme",
   "devDependencies": {
-    "morgan": "^1.10.0",
+    "@rollup/plugin-commonjs": "^22.0.2",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.3.0",
     "rollup": "^2.77.3"
   }
 }
