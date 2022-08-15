@@ -1,12 +1,16 @@
 import http from "http";
+import colorm from "./colorm.js";
 
 const serverm = (function() {
+  const {x1bWrap} = colorm;
   const serverm = {};
   serverm.defaultOpts = {
     port: process?.env?.PORT || 8080,
     hostname: "0.0.0.0",
   };
   class App {
+    _methods = [];
+    
     _middleware = [];
     
     constructor(opts = {}) {
@@ -23,8 +27,9 @@ const serverm = (function() {
     }
     
     listen(...args) {
-      const port = args[0]
-      || this.opts.port
+      // first argument must be the port or a function
+      const port = args[0] // gets first argument
+      || this.opts.port    // default to set options
       || serverm.defaultOpts.port;
       
       var hostname = this.opts.hostname
@@ -36,6 +41,8 @@ const serverm = (function() {
       var callback = this.opts.callback
       || serverm.defaultOpts.callback;
       
+      // if the first argument is a function, 
+      // use the above variables
       if(typeof args[0] == "function") {
         const port = this.opts.port;
         this.server.listen
@@ -44,13 +51,17 @@ const serverm = (function() {
         return this;
       }
       
+      // loops through arguments
       for(let i = 1; i < args.length; i++) {
         const io = args[i];
         if(typeof io == "number") {
+          // backlog
           backlog = io;
         } else if(typeof io == "string") {
+          // hostname
           hostname = io;
         } else {
+          // callback
           callback = io;
         }
       }
@@ -64,6 +75,38 @@ const serverm = (function() {
       
       return this;
     }
+    
+    get(path, func) {
+      
+    }
+    
+    head(path, func) {
+      
+    }
+    
+    post(path, func) {
+      
+    }
+    
+    put(path, func) {
+      
+    }
+    
+    delete(path, func) {
+      
+    }
+    
+    connect(path, func) {
+      
+    }
+    
+    options(path, func) {
+      
+    }
+    
+    patch(path, func) {
+      
+    }
   }
   
   serverm.app = function(...args) {
@@ -71,15 +114,61 @@ const serverm = (function() {
   };
   
   // middleware
-  serverm.logger = {
-    listen(obj = {}) {
-      console.log(
-        `Listening on port "${obj.port}" `
-      + `at host "${obj.hostname}"\n`
-      + `(backlog: "${obj.backlog}". Function: `
-      + `"${obj.callback}")\n`
-      );
-    },
+  serverm.basicLogger = function(type = "tiny", opts = {}) {
+    const obj = {};
+    
+    function wrap(e) {
+      if(typeof e == "string") {
+        return x1bWrap(opts.string, `"${e}"`);
+      } else if(Array.isArray(e)) {
+        return x1bWrap(opts.array, e);
+      } else {
+        if(e?.toString != undefined) {
+          return x1bWrap(opts[typeof e], e.toString());
+        } else {
+          // undefined messes with x1bWrap()
+          return x1bWrap(opts[typeof e], `${e}`);
+        }
+      }
+    }
+    
+    if(opts.all != undefined) {
+      for(const i in opts) {
+        if(i != "all") opts[i] = opts.all + opts[i];
+      };
+    }
+    
+    if(type == "verbose") {
+      
+      obj.listen = function(obj) {
+        console.log(
+          `Listening on port ${wrap(obj.port)} `
+        + `at host ${wrap(obj.hostname)}.\n`
+        + `(Backlog: ${wrap(obj.backlog)}. Function: `
+        + `${wrap(obj.callback)})\n`
+        );
+      };
+      
+    } else if(type == "normal") {
+      
+      obj.listen = function(obj) {
+        console.log(
+          `Listening on port ${wrap(obj.port)} `
+        + `at host ${wrap(obj.hostname)}\n`
+        );
+      };
+      
+    } else if(type == "tiny") {
+      
+      obj.listen = function(obj) {
+        console.log(
+          `Listening on port ${wrap(obj.port)}`
+        );
+      };
+      
+    }
+    
+    return obj;
   };
   
   return serverm;
