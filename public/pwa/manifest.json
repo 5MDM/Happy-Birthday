@@ -1,0 +1,9 @@
+{
+  "name": "HAPPY BIRTHDAY",
+  "short_name": "BIRTHDAY",
+  "description": "You must celebrate his birthday in order to live...",
+  "categories": ["games"],
+  "display": "fullscreen",
+  "orientation": "any",
+  "theme_color": "blue"
+}

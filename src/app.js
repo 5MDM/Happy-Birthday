@@ -1,12 +1,12 @@
-import serverm from "./serverm.js";
-import colorm from "./colorm.js";
+import express from "express";
 
-const app = serverm.app({port: 8080});
-app.use(serverm.basicLogger("tiny", {
-  all: colorm.x1b(1),
-  number: colorm.x1b(32),
-  string: colorm.x1b(33),
-  undefined: colorm.x1b(90),
-}));
+const __dirname = "/home/runner/Happy-Birthday/";
+
+const app = express();
+app.use(express.static(__dirname + "public"));
+
+app.get("/", (req, res) => {
+  res.redirect("/home.html");
+});
 
 export default app;
