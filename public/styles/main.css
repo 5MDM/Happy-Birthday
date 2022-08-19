@@ -7,8 +7,33 @@
 :root {
   --w: 100%;
   --h: 100%;
+  --margin: 3px;
 }
 
 body {
+  margin: calc(var(--margin) * 2);
+  width: auto;
   font-family: Arial;
+}
+
+#header {
+  display: flex;
+  width: auto;
+  height: 52px;
+  border: 2px solid black;
+}
+
+#header > * {height: 100%}
+
+#header #txt-c  {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border: 2px solid #999999;
+}
+
+#header #txt-c #txt {
+  text-transform: uppercase;
+  font-size: max(0.7em, 1.25vw);
 }
