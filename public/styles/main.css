@@ -36,4 +36,5 @@ body {
 #header #txt-c #txt {
   text-transform: uppercase;
   font-size: max(0.7em, 1.25vw);
+  text-align: center;
 }

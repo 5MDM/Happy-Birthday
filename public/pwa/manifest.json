@@ -6,6 +6,7 @@
   "display": "fullscreen",
   "orientation": "any",
   "theme_color": "blue",
+  "start_url": "/home.html",
   "icons": [
     {"src": "./120.png", "sizes": "120x120"},
     {"src": "./152.png", "sizes": "152x152"},

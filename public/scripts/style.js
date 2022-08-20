@@ -10,4 +10,30 @@
     root.style.setProperty("--w", innerWidth + "px");
     root.style.setProperty("--h", innerHeight + "px");
   });
+  
+  if("serviceWorker" in navigator) {
+    addEventListener("load", () => {
+      navigator.serviceWorker.register('/sw.js')
+      .then(reg => 
+        console.info("Service worker activated")
+      )
+      .catch(err => console.error(new Error(err)));
+    });
+  } else {
+    console.info(
+      "Service worker isn't supported"
+    );
+  }
+  
+  addEventListener("DOMContentLoaded", () => {
+    var online = navigator.onLine;
+    
+    if(!online) whenOffline();
+    
+    addEventListener("offline", whenOffline);
+    
+    function whenOffline() {
+      alert("offline");
+    }
+  });
 })();
