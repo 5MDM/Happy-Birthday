@@ -33,7 +33,10 @@
     addEventListener("offline", whenOffline);
     
     function whenOffline() {
-      alert("offline");
+      window.location.href = 
+      "https://happy-birthday.mdm4.repl.co/offline.html";
     }
   });
+  
+  addEventListener("touchstart", e => e.preventDefault())
 })();

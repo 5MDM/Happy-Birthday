@@ -1,5 +1,12 @@
 ;(function() {
-  const name = "5MDM/Happy-Birthday/v3";
+  const name = "5MDM/Happy-Birthday/v4";
+  addEventListener("install", e => {
+    e.waitUntil(
+      caches.open(name)
+      .then(cache => cache.addAll("/offline.html"))
+      .then(() => self.skipWaiting())
+    );
+  });
   
   addEventListener("activate", e => {
     // wait until cache is deleted
@@ -30,7 +37,7 @@
       return res;
     })
     .catch(err => {
-      caches.match(e.request())
+      caches.match(e.request)
       .then(res => res)
       .then(err => console.error(err));
     })

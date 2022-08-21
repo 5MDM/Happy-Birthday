@@ -49,7 +49,7 @@
     ];
     
     const url = 
-    document.querySelector("#header > #txt-c > #txt");
+    document.querySelector("#header #txt-c > #txt");
     
     function rand(max) {
       return Math.floor(Math.random() * (max - 1));

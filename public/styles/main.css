@@ -8,6 +8,12 @@
   --w: 100%;
   --h: 100%;
   --margin: 3px;
+  --header-top-h: 48px;
+  --header-bottom-h: 30px;
+  --header-h: calc(
+    var(--header-top-h) 
+  + var(--header-bottom-h)
+  );
 }
 
 body {
@@ -16,14 +22,60 @@ body {
   font-family: Arial;
 }
 
-#header {
-  display: flex;
-  width: auto;
-  height: 52px;
-  border: 2px solid black;
+a {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
 }
 
-#header > * {height: 100%}
+#header {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  height: var(--header-h);
+  width: calc(var(--w) - var(--margin) * 4);
+  border: 2px solid black;
+  background-color: white;
+  box-sizing: content-box;
+}
+
+#header > #top {
+  height: var(--header-top-h);
+  display: flex;
+}
+
+#header > #bottom {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  height: var(--header-bottom-h);
+}
+
+#header > #bottom a {
+  height: 100%;
+  width: 100%;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#header > #bottom a > button {
+  height: 100%;
+  width: 100%;
+  border-radius: none;
+  color: black;
+  border: 2px outset gray;
+}
+
+#header > #bottom a > button:active {
+  border-style: inset;
+}
+
+#header > * > * {height: 100%}
 
 #header #txt-c  {
   display: flex;
@@ -37,4 +89,9 @@ body {
   text-transform: uppercase;
   font-size: max(0.7em, 1.25vw);
   text-align: center;
+  width: 100%;
 }
+
+#navbar-spacer {height: var(--header-h)}
+
+#content {display: none}
