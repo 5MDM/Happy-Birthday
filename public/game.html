@@ -15,43 +15,41 @@
     <meta property="og:description" content="You must celebrate Andy's birthday in order to live..." />
     <meta property="og:image" content="https://happy-birthday.mdm4.repl.co/images/icon.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <title>Home</title>
+    <title>HAPPY BIRTHDAY ANDY</title>
     
-    <link rel="stylesheet" href="/styles/main.css" />
-    <link rel="stylesheet" href="/styles/article.css" />
+    <link rel="stylesheet" href="/styles/game/main.css" />
     
     <script src="/scripts/style.js"></script>
     <script src="/sw.js"></script>
     <script src="/scripts/noscript.js"></script>
-    <script defer src="/scripts/navbar.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r99/three.min.js" integrity="sha512-0tlhMhMGPohLm/YwaskxH7jJuUGqU/XPTl+HE0dWrhGbpEBRIZYMQdbHC0CmyNPzZKTBd8JoVZnvMcL7hzlFOg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script defer src="/scripts/game/main.js"></script>
   </head>
   <body>
-    <header id="header"></header>
-    <div id="sidebar"></div>
     <!-- replaces <main> -->
     <noscript class="content">
-      
-    </noscript>
-    <main class="hide content">
       <article>
-        <h1>Home</h1>
-        <h2>How to Play</h2>
+        <h1>Your browser has Javascript off</h1>
         <p>
-          Go to "THE GAME" in the navbar
-          and click on it. Clicking on it
-          will redirect you to the game. 
-          It should take a few seconds for
-          the game to load
-        </p>
-        <h2>Troubleshooting</h2>
-        <p>
-          For Troubleshooting, go to
-          <a href="/troubleshooting.html">
-            Troubleshooting
+          Your browser has Javascript (JS) turned off
+          or your browser doesn't support it. Please
+          turn on JS in your browser's settings. If
+          that doesn't work, try updating your browser
+          and your device. If that still doesn't
+          work, try using browsers such as Chrome, 
+          Safari, or Firefox
+          <br />
+          <a href="https://www.enable-javascript.com">
+            Click here for help
           </a>
-          to get help on problems
         </p>
       </article>
+    </noscript>
+    <main class="hide content">
+      <canvas id="c">
+        nope
+      </canvas>
     </main>
   </body>
 </html>

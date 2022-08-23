@@ -38,5 +38,5 @@
     }
   });
   
-  addEventListener("touchstart", e => e.preventDefault())
+  //addEventListener("touchstart", e => e.preventDefault());
 })();

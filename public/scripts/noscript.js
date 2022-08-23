@@ -2,7 +2,7 @@
   "use strict";
   
   addEventListener("DOMContentLoaded", () => {
-    const content = document.getElementById("content");
+    const content = document.querySelector("main");
     content.style.display = "block";
   });
 })();

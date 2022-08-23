@@ -1,17 +1,29 @@
 ;(function() {
-  const name = "5MDM/Happy-Birthday/v4";
+  const name = "5MDM/Happy-Birthday/v13";
+  const cacheName = [
+    "/offline.html",
+    "/scripts/navbar.js",
+    "/scripts/style.js",
+    "/scripts/modules/util.js",
+    "/scripts/modules/mcreate-el.js",
+    "/styles/main.css",
+    "/styles/article.css",
+    "/templates/header.html",
+  ];
+  
   addEventListener("install", e => {
     e.waitUntil(
       caches.open(name)
-      .then(cache => cache.addAll("/offline.html"))
+      .then(cache => cache.addAll(cacheName))
       .then(() => self.skipWaiting())
     );
   });
   
   addEventListener("activate", e => {
+    console.log("active");
     // wait until cache is deleted
     e.waitUntil(
-      caches.key()
+      caches.keys()
       .then(name => Promise.all(
         
         // iterate through all caches
@@ -25,21 +37,24 @@
       .then(() => self.skipWaiting())
     );
   });
-  addEventListener("fetch", e => e.respondWith(
-    fetch(e.request)
-    .then(res => {
-      const clone = res.clone();
-      
-      caches.open(name).then(cache =>
-        cache.put(e.request, clone)
-      );
-      
-      return res;
-    })
-    .catch(err => {
-      caches.match(e.request)
-      .then(res => res)
-      .then(err => console.error(err));
-    })
-  ));
+  
+  addEventListener("fetch", e => {
+    e.waitUntil(
+      caches.keys()
+      .then(name => Promise.all(
+        
+        // iterate through all caches
+        name.map(cache => {
+          // delete any old cache
+          if(cache != name)
+            return cache.delete(cache);
+        })
+        
+      ))
+      .then(() => self.skipWaiting())
+    );
+    e.respondWith(
+      fetch(e.request)
+    );
+  });
 })();
