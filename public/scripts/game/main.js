@@ -1,9 +1,10 @@
-;(function() {
+;(async function() {
   "use strict";
   
-  Promise.all(
-    import("/app.js")
-  ).then(() => {
-    
-  });
+  document.addEventListener("gesturestart", e => 
+    e.preventDefault()
+  );
+  
+  const {start} = await import("./menu.js");
+  start();
 })();

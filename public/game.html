@@ -2,7 +2,7 @@
 <html dir="ltr" lang="en-US">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="manifest" href="/pwa/manifest.json">
     <meta name="format-detection" content="telephone=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -46,10 +46,48 @@
         </p>
       </article>
     </noscript>
-    <main class="hide content">
-      <canvas id="c">
-        nope
-      </canvas>
+    <main class="hide content no-select">
+      <div id="ui-c">
+        <div id="ui">
+          <!-- 
+            Effects that go over everything.
+            For example, glitter
+          -->
+          <div id="effects-top"></div>
+          <!-- prompts -->
+          <div id="prompt"></div>
+          <!--
+            Books, jumpscares, etc. (normal)
+          -->
+          <div id="dir"></div>
+          <!--
+            menu, settings, save, etc. (buttons)
+          -->
+          <div id="gui"></div>
+          <!-- Joystick -->
+          <div id="controls"></div>
+          <!-- screen effects -->
+          <div id="effects"></div>
+        </div>
+      </div>
+      <div id="canvas-c">
+        <canvas id="c">
+          <article>
+            <h1>
+              Sorry, Your Browser Does Not Support
+              this Game
+            </h1>
+            <p>
+              Your browser does not support this game. 
+              Make sure you are playing this game in
+              fullscreen and your browser and device
+              are up to date. If that doesn't work, 
+              try using browser such as Chrome, Safari, or
+              Firefox
+            </p>
+          </article>
+        </canvas>
+      </div>
     </main>
   </body>
 </html>

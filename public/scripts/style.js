@@ -1,12 +1,9 @@
-;(function() {
+;(async function() {
   "use strict";
   const root = document.documentElement;
-  function once(evt, func) {
-    func();
-    addEventListener(evt, func);
-  }
+  const {cssOnce} = await import("/scripts/modules/utils.js");
   
-  once("resize", () => {
+  cssOnce("resize", () => {
     root.style.setProperty("--w", innerWidth + "px");
     root.style.setProperty("--h", innerHeight + "px");
   });
@@ -25,7 +22,7 @@
     );
   }
   
-  addEventListener("DOMContentLoaded", () => {
+  /*addEventListener("DOMContentLoaded", () => {
     var online = navigator.onLine;
     
     if(!online) whenOffline();
@@ -36,7 +33,7 @@
       window.location.href = 
       "https://happy-birthday.mdm4.repl.co/offline.html";
     }
-  });
+  });*/
   
-  //addEventListener("touchstart", e => e.preventDefault());
+  addEventListener("touchstart", e => e.preventDefault());
 })();

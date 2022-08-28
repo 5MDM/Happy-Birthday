@@ -7,13 +7,12 @@ h3 {margin-top: 8px}
 #sidebar {
   box-sizing: content-box;
   position: fixed;
-  background-image: url("/images/rainbow.svg");
   background-size: 26px;
-  background-color: transparent;
+  background-color: silver;
   width: 26px;
   border: 2px solid black;
   background-color: none;
-  height: var(--h);
+  height: 100%;
 }
 
 .content {
@@ -39,7 +38,7 @@ h3 {margin-top: 8px}
 
 .home-btn-c {
   display: block;
-  width: calc(var(--w) / 1.5);
+  width: 80%;
   margin: auto;
   height: 48px;
   margin-top: 50px;

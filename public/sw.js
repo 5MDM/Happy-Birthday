@@ -39,21 +39,7 @@
   });
   
   addEventListener("fetch", e => {
-    e.waitUntil(
-      caches.keys()
-      .then(name => Promise.all(
-        
-        // iterate through all caches
-        name.map(cache => {
-          // delete any old cache
-          if(cache != name)
-            return cache.delete(cache);
-        })
-        
-      ))
-      .then(() => self.skipWaiting())
-    );
-    e.respondWith(
+    e.respoondWith(
       fetch(e.request)
     );
   });
