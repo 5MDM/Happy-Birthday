@@ -1,5 +1,5 @@
 ;(function() {
   "use strict";
   
-  addEventListener("online", () => history.back());
+  //addEventListener("online", () => history.back());
 })();

@@ -31,7 +31,9 @@
   + "by 99999%",
     "andy co. stocks went up by 9999% because "
   + "it was andy's birthday",
-    "celebrate andy's birthday immediately"
+    "celebrate andy's birthday immediately",
+    "prepare to use the obama phone on "
+  + "the first day of school!!! (or else...)"
   ];
   
   (async function() {

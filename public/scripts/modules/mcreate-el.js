@@ -24,13 +24,47 @@ function newEl(name, opts = {}) {
     }
   }
   
-  if(opts.up != undefined) once(opts.up, func => 
-    el.addEventListener("pointerup", func)
-  );
+  if(opts.up != undefined) 
+    once(opts.up, func => 
+      el.addEventListener("pointerup", func)
+    );
   
-  if(opts.down != undefined) once(opts.down, func => 
-    el.addEventListener("pointerdown", func)
-  );
+  if(opts.down != undefined) 
+    once(opts.down, func => 
+      el.addEventListener("pointerdown", func)
+    );
+  
+  if(opts.inside != undefined)
+    once(opts.inside, func => {
+      el.addEventListener("pointerup", e => {
+        const pos = el.getBoundingClientRect();
+        
+        /*console.log({
+          mouseX: e.pageX,
+          mouseY: e.pageY,
+          top: pos.top,
+          right: pos.right,
+          bottom: pos.bottom,
+          left: pos.left,
+        });*/
+        
+        if(e.pageX > pos.left
+        && e.pageX < pos.right
+        && e.pageY > pos.top
+        && e.pageY < pos.bottom) func(e);
+      });
+    });
+  
+  if(opts.outside != undefined)
+    once(opts.outside, func => {
+      el.addEventListener("pointerup", e => {
+        const pos = el.getBoundingClientRect();
+        if(!(e.pageX > pos.left
+        && e.pageX < pos.right
+        && e.pageY > pos.top
+        && e.pageY < pos.bottom)) func(e);
+      });
+    });
   
   if(opts.children != undefined) {
     once(opts.children, e => {
