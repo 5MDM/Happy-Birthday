@@ -25,17 +25,24 @@ function addToUI(a, b) {
   $("#ui >" + a).appendChild(b);
 }
 
-function stopLoop(func) {
+function stopLoop(func, firstTick = true) {
+  var loopRunning = firstTick;
   var stop = false;
   function stopF() {stop = true}
-  function startF() {stop = false}
+  function startF() {
+    stop = false;
+    if(!loopRunning) {
+      loopRunning = true;
+      requestAnimationFrame(loop);
+    }
+  }
   
   function loop() {
-    func(startF, stopF);
+    func({start: startF, stop: stopF});
     if(!stop) requestAnimationFrame(loop);
   }
   
-  requestAnimationFrame(loop);
+  if(firstTick) requestAnimationFrame(loop);
   
   return {
     start: startF,
@@ -124,6 +131,73 @@ function linear(opts = {}) {
   }
 }
 
+function parseCSV(e) {
+  const arr = [];
+  var current = "";
+  for(const char of e) {
+    if(char == "\n") {
+      arr.push(current);
+      current = "";
+    } else {
+      current += char;
+    }
+  }
+  arr.push(current);
+  
+  return arr;
+}
+
+function getCSV(e) {
+  return new Promise(
+    a => fetch(e)
+    .then(e => e.text())
+    .then(e =>  a(parseCSV(e))),
+  );
+};
+
+function getFile(e) {
+  return new Promise(
+    a => fetch(e)
+    .then(e => e.text())
+    .then(e => a(e))
+  );
+}
+
+class Keymap {
+  keys = {};
+  
+  contructor(e) {
+    if(e != undefined) this.str = e;
+  }
+  
+  key(a, b) {
+    this.keys[a] = b;
+    return this;
+  }
+  
+  run(e, opts = {}) {
+    if(e != undefined) this.str = e;
+    var x = opts.x || 0;
+    var y = opts.y || e.length;
+    
+    var stop = false;
+    function end() {stop = true}
+    
+    for(const i of this.str) {
+      if(i in this.keys) this.keys[i]({x, y, end});
+      if(stop) break;
+      if(i == "\n") {
+        y--; 
+        x = 0;
+      } else {
+        x++;
+      }
+    }
+    
+    return this;
+  }
+}
+
 /*
 linear({
   start: 1,
@@ -147,4 +221,8 @@ export {
   linear,
   round,
   signOf,
+  getCSV,
+  parseCSV,
+  getFile,
+  Keymap,
 };

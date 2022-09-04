@@ -1,5 +1,5 @@
 import {$} from "../modules/mcreate-el.js";
-import {cssOnce} from "../modules/utils.js";
+import {cssOnce, stopLoop} from "../modules/utils.js";
 
 const renderer = new THREE.WebGLRenderer({
   canvas: $("#c"),
@@ -9,8 +9,22 @@ const renderer = new THREE.WebGLRenderer({
 
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(innerWidth, innerHeight);
-cssOnce("resize", () => renderer.setSize(innerWidth, innerHeight));
+cssOnce("resize", () => renderer.setSize(innerWidth, innerHeight))
+
+var currentScene;
+var currentCam;
+
+function setCurrentScene(e) {currentScene = e}
+
+function setCurrentCam(e) {currentCam = e}
+
+const renderLoop = stopLoop(() => {
+  renderer.render(currentScene, currentCam);
+}, false);
 
 export {
+  renderLoop,
   renderer,
+  setCurrentScene,
+  setCurrentCam,
 };
