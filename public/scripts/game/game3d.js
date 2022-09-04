@@ -21,7 +21,7 @@ async function game3d() {
   setCurrentCam(cam);
   
   const level = 
-  await getFile("/scripts/game/3d/beginning.csv");
+  await getFile("/scripts/game/3d/beginning.txt");
   
   var centerX = 0;
   var centerY = 0;
