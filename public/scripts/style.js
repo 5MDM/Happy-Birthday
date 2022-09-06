@@ -1,9 +1,9 @@
 ;(async function() {
   "use strict";
   const root = document.documentElement;
-  const {cssOnce} = await import("/scripts/modules/utils.js");
+  const {eventOnce} = await import("/scripts/modules/utils.js");
   
-  cssOnce("resize", () => {
+  eventOnce("resize", () => {
     root.style.setProperty("--w", innerWidth + "px");
     root.style.setProperty("--h", innerHeight + "px");
   });

@@ -16,7 +16,7 @@ function randFromArr(e) {
   return e[rand({max: e.length})];
 }
 
-function cssOnce(evt, func) {
+function eventOnce(evt, func) {
   func();
   addEventListener(evt, func);
 }
@@ -131,7 +131,7 @@ function linear(opts = {}) {
   }
 }
 
-function parseCSV(e) {
+function parseMapData(e) {
   const arr = [];
   var current = "";
   for(const char of e) {
@@ -147,11 +147,11 @@ function parseCSV(e) {
   return arr;
 }
 
-function getCSV(e) {
+function getMapData(e) {
   return new Promise(
     a => fetch(e)
     .then(e => e.text())
-    .then(e =>  a(parseCSV(e))),
+    .then(e =>  a(parseMapData(e))),
   );
 };
 
@@ -166,8 +166,8 @@ function getFile(e) {
 class Keymap {
   keys = {};
   
-  contructor(e) {
-    if(e != undefined) this.str = e;
+  constructor(e) {
+    this.str = e;
   }
   
   key(a, b) {
@@ -178,25 +178,29 @@ class Keymap {
   run(e, opts = {}) {
     if(e != undefined) this.str = e;
     var x = opts.x || 0;
-    var y = opts.y || e.length;
+    var y = opts.y || this.str.length - 1;
     
     var stop = false;
     function end() {stop = true}
     
-    for(const i of this.str) {
-      if(i in this.keys) this.keys[i]({x, y, end});
-      if(stop) break;
-      if(i == "\n") {
-        y--; 
-        x = 0;
-      } else {
+    for(const yo of this.str) {
+      // arrays
+      for(const xo of yo) {
+        // texts
+        if(xo in this.keys) this.keys[xo]({x, y, end});
+        if(stop) break;
         x++;
       }
+      if(stop) break;
+      y--;
+      x = 0;
     }
     
     return this;
   }
 }
+
+const RADIAN_HALF = 1.570796;
 
 /*
 linear({
@@ -211,18 +215,29 @@ linear({
   end: -10,
 });*/
 
+function clamp(min, num, max) {
+  return Math.min(Math.max(num, min), max);
+}
+
+function randomColor() {
+  return Math.floor(Math.random() * 0xffffff);
+}
+
 export {
   once,
   rand,
   randFromArr,
-  cssOnce,
+  eventOnce,
   addToUI,
   stopLoop,
   linear,
   round,
   signOf,
-  getCSV,
-  parseCSV,
+  getMapData,
+  parseMapData,
   getFile,
   Keymap,
+  RADIAN_HALF,
+  clamp,
+  randomColor,
 };

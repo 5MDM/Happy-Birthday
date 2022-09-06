@@ -20,9 +20,9 @@ body {
 
 main {
   /* Enable when in production */
-  /*overscroll-behavior: contain;
+  overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
-  overflow: auto;*/
+  overflow: auto;
 }
 
 #c {

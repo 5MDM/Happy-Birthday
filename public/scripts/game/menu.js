@@ -1,5 +1,5 @@
 import {renderer} from "./app.js";
-import {addToUI, cssOnce, stopLoop, round} 
+import {addToUI, stopLoop, round} 
 from "../modules/utils.js";
 import {newEl, $, parseCSS, regularBtnPush} 
 from "../modules/mcreate-el.js";
