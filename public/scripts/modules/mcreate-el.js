@@ -96,6 +96,8 @@ function parseCSS(css = {}) {
 }
 
 function regularBtnPush(e, opts) {
+  e.style["pointer-events"] = "auto";
+  
   e.addEventListener("pointerdown", () => {
     e.style["border-style"] = "inset";
     if(opts != undefined)

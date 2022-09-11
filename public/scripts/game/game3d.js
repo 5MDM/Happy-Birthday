@@ -51,31 +51,104 @@ function game3d() {
 }
 
 function addJoystick() {
-  /*const static = nipplejs.create({
-    zone: $("c"),
-    mode: "dynamic",
-    color: "red",
-  });*/
-  nipplejs.create({
-    zone: $("#controls"),
-    mode: "dynamic",
-    color: "red",
+  const ctrls = {
+    up: newEl("button", {
+      attrs: {style: "grid-column: 2"},
+      children: "up",
+    }),
+    left: newEl("button", {
+      attrs: {style: "grid-column: 1; grid-rows: 2"},
+      children: "left",
+    }),
+    down: newEl("button", {
+      children: "bottom",
+    }),
+    right: newEl("button", {
+      children: "right",
+    }),
+  };
+  
+  addTouchControlButton();
+  
+  const joystick = newEl("div", {
+    attrs: {style: parseCSS({
+      display: "grid",
+      border: "2px solid blue",
+      width: "40%",
+      height: "40%",
+      "z-index": "3",
+      "background-color": "rgba(10, 10, 10, 0.5)",
+      "pointer-events": "auto",
+      "grid-template-columns": "repeat(3, 1fr)",
+      "grid-template-rows": "repeat(2, 1fr)",
+    })},
+    children: [
+      ctrls.up,
+      ctrls.left,
+      ctrls.down,
+      ctrls.right,
+    ],
+    forEach(el) {
+      el.style.border = "3px outset silver";
+      el.style.color = "black";
+      regularBtnPush(el, {color: "gray"});
+    }
   });
   
+  const joyc = newEl("div", {
+    attrs: {style: parseCSS({
+      display: "flex",
+      "flex-direction": "column",
+      "align-items": "flex-start",
+      "justify-content": "flex-end",
+      width: "100%",
+      height: "100%",
+      "pointer-events": "none",
+    })},
+    children: joystick,
+  });
+  addToUI("#controls", joyc);
+  
+  function addTouchControlButton() {
+    var up = false;
+    
+    const m = {
+      x: 0,
+      y: 0,
+    }
+    
+    ctrls.up.addEventListener("touchstart", e => {
+      if(!up) {
+        up = true;
+        m.x += 0.1;
+      }
+    });
+    
+    ctrls.up.addEventListener("touchend", e => {
+      if(up) {
+        up = false;
+        m.x -= 0.1;
+      }
+    });
+    
+    const loop = stopLoop(() => {
+      
+    });
+  }
 }
 
+var mathX = -RADIAN_HALF;
+var mathY = 0;
+
 function addCameraControls(cam) {
+  var touchDown = false;
+  var current_id;
   var lx = 0;
   var ly = 0;
   
-  addEventListener("touchstart", e => {
-    lx = e.pageX;
-    ly = e.pageY;
-  });
-  
   // set default camera values
-  var mathX = -RADIAN_HALF;
-  var mathY = 0;
+  /*var mathX = -RADIAN_HALF;
+  var mathY = 0;*/
   cam.rotation.x = RADIAN_HALF;
   cam.rotation.y = -RADIAN_HALF;
   
@@ -103,22 +176,56 @@ function addCameraControls(cam) {
     cam.quaternion.copy(q);
   }
   
-  addEventListener("touchmove", e => {
-    const sx = (lx - e.pageX) * 0.005;
-    const sy = (ly - e.pageY) * 0.005;
-    lx = e.pageX;
-    ly = e.pageY;
+  function addTouchControls(c) {
+    function getTouch(e, i) {
+      if(i == undefined)
+        i = e.changedTouches.length - 1;
+      return e.changedTouches[i];
+    }
     
-    mathX += -sx * settings.sensitivity;
-    mathY = clamp(
-      -Math.PI / 3,
-      mathY + -sy * settings.sensitivity,
-      Math.PI / 3,
-    );
+    c.addEventListener("touchstart", e => {
+      const touch = getTouch(e);
+      if(!touchDown) {
+        touchDown = true;
+        current_id = touch.identifier;
+        lx = touch.pageX;
+        ly = touch.pageY;
+      }
+    });
     
-    updateCamera();
-  });
+    c.addEventListener("touchmove", e => {
+      const touch = getTouch(e);
+      var found = false;
+      if(touch.identifier == current_id)
+        found = true;
+      
+      if(!found) return;
+      
+      moveCamera(touch);
+      
+      updateCamera();
+    });
+    
+    c.addEventListener("touchend", e => {
+      touchDown = false;
+    });
+    
+    function moveCamera(e) {
+      const sx = (lx - e.pageX) * 0.005;
+      const sy = (ly - e.pageY) * 0.005;
+      lx = e.pageX;
+      ly = e.pageY;
+      
+      mathX += -sx * settings.sensitivity;
+      mathY = clamp(
+        -Math.PI / 3,
+        mathY + -sy * settings.sensitivity,
+        Math.PI / 3,
+      );
+    }
+  }
   
+  addTouchControls($("#c"));
   
   updateCamera();
 }
