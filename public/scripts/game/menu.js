@@ -3,8 +3,19 @@ import {addToUI, stopLoop, round}
 from "../modules/utils.js";
 import {newEl, $, parseCSS, regularBtnPush} 
 from "../modules/mcreate-el.js";
+import {music} from "./music.js";
 
 import {game3d} from "./game3d.js";
+/*const a = newEl("audio", {
+  attrs: {
+    src: "./audio/andy-birthday.mp3",
+  },
+});
+document.body.appendChild(a);
+
+document.body.addEventListener("pointerup", e => {
+  a.play();
+});*/
 
 const menu = newEl("div", {
   attrs: {style: parseCSS({
@@ -22,11 +33,11 @@ const menu = newEl("div", {
   children: [
     newEl("button", {
       children: "Start",
-      up: () => game3d(),
+      up: game3d,
     }),
     newEl("button", {
       children: "Settings",
-    })
+    }),
   ],
   forEach(el) {
     el.style = parseCSS({
@@ -36,10 +47,13 @@ const menu = newEl("div", {
       color: "black",
       border: "2px outset gray",
       "border-radius": "10px",
+      onclick: "aaa()",
     });
     regularBtnPush(el, {color: "gray"});
     el.addEventListener("pointerup", () => menu.remove());
-  }
+    
+    el.addEventListener("pointerup", music);
+  },
 });
 
 function start() {
