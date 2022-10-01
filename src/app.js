@@ -7,11 +7,11 @@ const app = express();
 app.use(express.static(__dirname + "public"));
 
 app.get("/", (req, res) => {
-  // res.redirect("/home.html");
   res.redirect("/game.html");
 });
 
 app.get("*", (req, res) => {
+  // checks for 404
   if(fs.existsSync(req.url)) {
     res.redirect(req.url);
   } else {

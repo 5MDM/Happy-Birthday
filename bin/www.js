@@ -16,7 +16,6 @@ function commandInput() {
       process.exit(0);
     } else {
       console.log("Bad Command");
-      commandInput();
     }
   });
 };

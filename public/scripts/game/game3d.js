@@ -22,17 +22,6 @@ const keymapDef = {
   PLAYER: "@",
 };
 
-const player = {
-  canMove: true,
-  up: false,
-  left: false,
-  down: false,
-  right: false,
-  x: 0,
-  y: 0,
-  ctrls: {},
-};
-
 const loadLoop = [];
 
 function game3d() {
@@ -180,4 +169,4 @@ async function addLevels(txt, cx, cy) {
   }
 }
 
-export {game3d, player};
+export {game3d};

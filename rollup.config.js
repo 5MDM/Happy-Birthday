@@ -7,9 +7,7 @@ export default {
   output: {
     file: "./dist/bundle.js",
     format: "cjs",
-    //name: "test",
     exports: "none",
   },
   plugins: [cjs(), nodeResolve(), json()],
 };
-

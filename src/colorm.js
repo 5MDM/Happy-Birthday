@@ -1,5 +1,3 @@
-
-// adds color to the console
 const colorm = (function() {
   const colorm = {
     reset: 0,
