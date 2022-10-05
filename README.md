@@ -1,9 +1,9 @@
-# Happy-Birthday
+# Test-Game
 ## About
-Happy Birthday is a game I made for someone
+I made this game for stuff
 
 ## License
-Happy Birthday is licensed under the [MIT](https://github.com/5MDM/Happy-Birthday/blob/main/LICENSE) license
+Test-Game is licensed under the [MIT](https://github.com/5MDM/Happy-Birthday/blob/main/LICENSE) license
 
 ## Running
 To run in development mode, simply enter `yarn dev`
