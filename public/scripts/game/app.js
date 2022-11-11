@@ -7,9 +7,18 @@ const renderer = new THREE.WebGLRenderer({
   antialias: false,
 });
 
-renderer.setPixelRatio(window.devicePixelRatio);
+const dpi = devicePixelRatio;
+
+renderer.setPixelRatio(devicePixelRatio);
 renderer.setSize(innerWidth, innerHeight);
 eventOnce("resize", () => renderer.setSize(innerWidth, innerHeight))
+
+eventOnce("resize", () => {
+  $("#c").setAttribute("width", innerWidth * dpi);
+  $("#c").setAttribute("height", innerHeight * dpi);
+  $("#c").style.width = innerWidth + "px";
+  $("#c").style.height = innerHeight + "px";
+});
 
 var currentScene;
 var currentCam;

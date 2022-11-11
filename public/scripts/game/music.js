@@ -64,7 +64,7 @@ function music() {
   el.addEventListener("ended", e => ended = true);
   
   el.addEventListener("pause", e => {
-    if(ended) playMusicEl.style.display = "block";
+    if(!ended) playMusicEl.style.display = "block";
     ended = false;
   });
   

@@ -8,7 +8,7 @@ import {newEl, $, parseCSS, regularBtnPush}
 from "../modules/mcreate-el.js";
 import {settings}
 from "./settings.js";
-import {addJoystick} from "./controls.js";
+import {addJoystick, addMovementListener} from "./controls.js";
 
 const t = THREE;
 const scene = new t.Scene();
@@ -60,6 +60,7 @@ function addCameraControls(cam) {
   var lx = 0;
   var ly = 0;
   
+  // also HAPPY BIRTHDAY ANDY AND LUIS
   // set default camera values
   /*var mathX = -RADIAN_HALF;
   var mathY = 0;*/
@@ -91,10 +92,8 @@ function addCameraControls(cam) {
   }
   
   function addTouchControls(c) {
-    function getTouch(e, i) {
-      if(i == undefined)
-        i = e.changedTouches.length - 1;
-      return e.changedTouches[i];
+    function getTouch(e) {
+      return e.changedTouches[e.changedTouches.length - 1];
     }
     
     c.addEventListener("touchstart", e => {
@@ -125,8 +124,8 @@ function addCameraControls(cam) {
     });
     
     function moveCamera(e) {
-      const sx = (lx - e.pageX) * 0.005;
-      const sy = (ly - e.pageY) * 0.005;
+      const sx = -(lx - e.pageX) * 0.005;
+      const sy = -(ly - e.pageY) * 0.005;
       lx = e.pageX;
       ly = e.pageY;
       
@@ -140,6 +139,36 @@ function addCameraControls(cam) {
   }
   
   addTouchControls($("#c"));
+  var speedVertical = 0;
+  addMovementListener("up", (() => {
+    
+    function down() {
+      speedVertical = 0.1;
+    }
+    
+    function up() {
+      speedVertical = 0;
+    }
+    
+    return {up, down};
+  })());
+  
+  addMovementListener("down", (() => {
+    
+    function down() {
+      speedVertical = -0.1;
+    }
+    
+    function up() {
+      speedVertical = 0;
+    }
+    
+    return {up, down};
+  })());
+  
+  const movementLoop = stopLoop(() => {
+    cam.translateZ(-speedVertical);
+  });
   
   updateCamera();
 }
@@ -162,6 +191,7 @@ async function addLevels(txt, cx, cy) {
   map.run();
   
   function initCoords(o) {
+    o.x *= -1;
     o.x -= cx;
     o.y -= cy;
     o.x *= size;

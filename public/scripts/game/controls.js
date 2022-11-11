@@ -1,25 +1,25 @@
 import {newEl, $, parseCSS, regularBtnPush} 
 from "../modules/mcreate-el.js";
-import {addToUI} from "../modules/utils.js";
+import {addToUI, once} from "../modules/utils.js";
+
+const ctrls = {
+  up: newEl("button", {
+    attrs: {style: "grid-column: 2"},
+    children: "up",
+  }),
+  left: newEl("button", {
+    attrs: {style: "grid-column: 1; grid-rows: 2"},
+    children: "left",
+  }),
+  down: newEl("button", {
+    children: "bottom",
+  }),
+  right: newEl("button", {
+    children: "right",
+  }),
+};
 
 function addJoystick() {
-  const ctrls = {
-    up: newEl("button", {
-      attrs: {style: "grid-column: 2"},
-      children: "up",
-    }),
-    left: newEl("button", {
-      attrs: {style: "grid-column: 1; grid-rows: 2"},
-      children: "left",
-    }),
-    down: newEl("button", {
-      children: "bottom",
-    }),
-    right: newEl("button", {
-      children: "right",
-    }),
-  }
-  
   const joystick = newEl("div", {
     attrs: {style: parseCSS({
       display: "grid",
@@ -60,4 +60,14 @@ function addJoystick() {
   addToUI("#controls", joyc);
 }
 
-export {addJoystick};
+function addMovementListener
+(type = "up", func = {}, o = false) {
+  once(type, e => {
+    ctrls[e]
+    .addEventListener("pointerdown", func.down, {once: o});
+    ctrls[e]
+    .addEventListener("pointerup", func.up, {once: o});
+  });
+}
+
+export {addJoystick, addMovementListener};
